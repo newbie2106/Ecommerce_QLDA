@@ -23,7 +23,11 @@ public interface UserRepository {
     
     public List<User> getUsers();
 
+
+    public void addOrUpdateUser(User u);
+
     public void addOrUpdateUser(User user);
+
     
     public void deleteUser(int id);
 

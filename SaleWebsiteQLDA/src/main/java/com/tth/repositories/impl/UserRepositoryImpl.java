@@ -68,6 +68,16 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+
+    public void addOrUpdateUser(User u) {
+        u.setCreatedDate(new Date());
+        Session s = this.factory.getObject().getCurrentSession();
+        if (u.getId() != null) {
+            s.update(u);
+        } else {
+            s.save(u);
+        }
+
     public void addOrUpdateUser(User user) {
         Session s = this.factory.getObject().getCurrentSession();
         User existedUser = getUserByUsername(user.getUsername());
@@ -98,6 +108,7 @@ public class UserRepositoryImpl implements UserRepository {
             user.setCreatedDate(new Date());
             s.save(user);
         }
+
 
     }
 

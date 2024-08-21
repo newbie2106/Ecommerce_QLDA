@@ -4,6 +4,14 @@
  */
 package com.tth.services.impl;
 
+
+import com.tth.pojo.User;
+import com.tth.repositories.UserRepository;
+import com.tth.services.UserService;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.tth.pojo.User;
@@ -16,6 +24,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -37,8 +46,11 @@ public class UserSeviceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+
+
     @Autowired
     private Cloudinary cloudinary;
+
 
     @Override
     public User getUserById(int id) {
@@ -80,6 +92,9 @@ public class UserSeviceImpl implements UserService {
 
     @Override
     public void addOrUpdateUser(User u) {
+
+        u.setAvatar("https://res.cloudinary.com/dsbkju7j9/image/upload/v1719163511/bshktjhrrdzspkm7u301.png");
+
         if (!u.getFile().isEmpty()) {
             try {
                 Map res = this.cloudinary.uploader().upload(u.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
@@ -89,6 +104,7 @@ public class UserSeviceImpl implements UserService {
             }
         }
         u.setPassword(this.passwordEncoder.encode(u.getPassword()));
+
         this.userRepo.addOrUpdateUser(u);
     }
 
