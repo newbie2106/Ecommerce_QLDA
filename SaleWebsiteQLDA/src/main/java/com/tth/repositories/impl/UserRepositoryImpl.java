@@ -68,6 +68,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+
     public void addOrUpdateUser(User u) {
         u.setCreatedDate(new Date());
         Session s = this.factory.getObject().getCurrentSession();
@@ -76,6 +77,39 @@ public class UserRepositoryImpl implements UserRepository {
         } else {
             s.save(u);
         }
+
+    public void addOrUpdateUser(User user) {
+        Session s = this.factory.getObject().getCurrentSession();
+        User existedUser = getUserByUsername(user.getUsername());
+        if (existedUser.getUsername() != null) {
+            if (user.getPassword() == null) {
+                user.setPassword(existedUser.getPassword());
+            }
+            if (user.getAvatar() == null) {
+                user.setAvatar(existedUser.getAvatar());
+            }
+            if (user.getCreatedDate() == null) {
+                user.setCreatedDate(existedUser.getCreatedDate());
+            }
+            if (user.getAddress() == null) {
+                user.setAddress(existedUser.getAddress());
+            }
+            if (user.getPhone() == null) {
+                user.setPhone(existedUser.getPhone());
+            }
+            if (user.getEmail() == null) {
+                user.setEmail(existedUser.getEmail());
+            }
+            s.update(user);
+        } else {
+            if (user.getAvatar() == null) {
+                user.setAvatar("https://res.cloudinary.com/dsbkju7j9/image/upload/v1719163511/bshktjhrrdzspkm7u301.png");
+            }
+            user.setCreatedDate(new Date());
+            s.save(user);
+        }
+
+
     }
 
     @Override

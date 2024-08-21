@@ -64,54 +64,6 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/users.jsp" />
     </definition>
-
-    <!--    <definition name="post" extends="baseLayout">
-        <put-attribute name="title" value="Quản lý bài viết" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/post.jsp" />
-    </definition>
-    <definition name="user-list" extends="baseLayout">
-        <put-attribute name="title" value="Quản lý tài khoản" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/users.jsp" />
-    </definition>
-    <definition name="lessor-list" extends="baseLayout">
-        <put-attribute name="title" value="Quản lý vai trò người dùng" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/approve-user.jsp" />
-    </definition>
-    <definition name="login" extends="baseLayout">
-        <put-attribute name="title" value="Đăng nhập" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/login.jsp" />
-    </definition>
-    <definition name="lessor-post" extends="baseLayout">
-        <put-attribute name="title" value="Quản lý vai trò người dùng" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/lessor-post.jsp" />
-    </definition>
-    <definition name="customer-post" extends="baseLayout">
-        <put-attribute name="title" value="Quản lý vai trò người dùng" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/customer-post.jsp" />
-    </definition>
-    <definition name="stats" extends="baseLayout">
-        <put-attribute name="title" value="Quản lý vai trò người dùng" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/stats.jsp" />
-    </definition>
-    <definition name="lessor-list-details" extends="baseLayout">
-        <put-attribute name="title" value="Quản lý vai trò người dùng" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/approve-user-details.jsp" />
-    </definition>
-     <definition name="add-user" extends="baseLayout">
-        <put-attribute name="title" value="Người dùng" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/add-update-user.jsp" />
-    </definition>-->
-
     
-
 </tiles-definitions>
 

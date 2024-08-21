@@ -44,8 +44,13 @@ public class ApiProductController {
         return new ResponseEntity<>(this.prodService.getProducts(params), HttpStatus.OK);
     }
 
+
     @GetMapping(path = "/products/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Product> retrieve(@PathVariable(value = "id") int id) {
+
+    @GetMapping(path = "/products/{productId}/", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Product> retrieve(@PathVariable(value = "productId") int id) {
+
         return new ResponseEntity<>(this.prodService.getProductById(id), HttpStatus.OK);
     }
 }

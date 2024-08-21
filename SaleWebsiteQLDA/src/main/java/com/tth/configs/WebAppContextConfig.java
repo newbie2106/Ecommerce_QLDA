@@ -4,8 +4,14 @@
  */
 package com.tth.configs;
 
+
 import formatters.BrandFormatter;
 import formatters.CategoryFormatter;
+
+import com.tth.formatters.RoleFormatter;
+import com.tth.formatters.BrandFormatter;
+import com.tth.formatters.CategoryFormatter;
+
 import java.text.SimpleDateFormat;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -69,6 +75,10 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new CategoryFormatter());
         registry.addFormatter(new BrandFormatter());
+
+
+
+        registry.addFormatter(new RoleFormatter());
 
     }
 }
