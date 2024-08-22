@@ -68,5 +68,30 @@ public class ApiUserController {
         this.userService.deleteUser(id);
     }
 
+@PostMapping(path = "/users/", consumes = {
+        MediaType.APPLICATION_JSON_VALUE,
+        MediaType.MULTIPART_FORM_DATA_VALUE
+    })
+    @ResponseStatus(HttpStatus.CREATED)
+    @CrossOrigin
+    public void create(@RequestParam Map<String, String> params, @RequestPart MultipartFile[] file) {
+        User u = new User();
+        Role role = this.roleService.getRoleById(Integer.parseInt(params.get("role")));
+        u.setFirstName(params.get("firstName"));
+        u.setLastName(params.get("lastName"));
+        u.setUsername(params.get("username"));
+        u.setEmail(params.get("email"));
+        u.setPhone(params.get("phone"));
+        String password = params.get("password");
+       
+        u.setRoleId(role);
+        if (file.length > 0) {
+            u.setFile(file[0]);
+        }
+
+        this.userService.addOrUpdateUser(u);
+    }
+	
+
     
 }
