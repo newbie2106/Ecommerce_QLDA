@@ -56,7 +56,10 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
                 authorities.add(new SimpleGrantedAuthority( user.getRoleId().getRoleName()));
                 UserDetails userDetail = new org.springframework.security.core.userdetails.User(username, user.getPassword(), enabled, accountNonExpired,
                         credentialsNonExpired, accountNonLocked, authorities);
-               
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetail,
+                        null, userDetail.getAuthorities());
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
         chain.doFilter(request, response);
