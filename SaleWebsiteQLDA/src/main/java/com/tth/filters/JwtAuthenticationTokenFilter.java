@@ -50,7 +50,7 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
                 boolean accountNonExpired = true;
                 boolean credentialsNonExpired = true;
                 boolean accountNonLocked = true;
-                System.out.println("TRINH TONG HIEPP:   " + user.getRoleId().getRoleName());
+                System.out.println("TRINH TONG HIEP:   " + user.getRoleId().getRoleName());
 
                 Set<GrantedAuthority> authorities = new HashSet<>();
                 authorities.add(new SimpleGrantedAuthority( user.getRoleId().getRoleName()));
