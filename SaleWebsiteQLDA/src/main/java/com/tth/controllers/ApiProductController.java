@@ -33,6 +33,11 @@ public class ApiProductController {
     @Autowired
     private ProductService prodService;
 
+    @DeleteMapping("/products/{productId}/")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProduct(@PathVariable(value = "productId") int id) {
+        this.prodService.deleteProduct(id);
+    }
 
     @GetMapping("/products/")
     public ResponseEntity<List<Product>> list(@RequestParam Map<String, String> params) {
