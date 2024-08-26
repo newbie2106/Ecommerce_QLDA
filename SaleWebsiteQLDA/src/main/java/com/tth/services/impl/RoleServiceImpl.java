@@ -15,10 +15,9 @@ import org.springframework.stereotype.Service;
  *
  * @author tongh
  */
-
 @Service
-public class RoleServiceImpl implements RoleService{
-    
+public class RoleServiceImpl implements RoleService {
+
     @Autowired
     private RoleRepository roleRepo;
 
@@ -26,7 +25,10 @@ public class RoleServiceImpl implements RoleService{
     public List<Role> getRole() {
         return this.roleRepo.getRole();
     }
-    
-    
-    
+
+    @Override
+    public Role getRoleById(int id) {
+        return this.roleRepo.getRoleById(id);
+    }
+
 }
