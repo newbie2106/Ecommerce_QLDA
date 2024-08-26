@@ -36,6 +36,9 @@ public class ApiCategoryController {
         this.cateService.deleteCategory(id);
     }
 
-
+    @GetMapping("/categories/")
+    public ResponseEntity<List<Category>> listCategories() {
+        return new ResponseEntity<>(this.cateService.getCates(), HttpStatus.OK);
+    }
 
 }
