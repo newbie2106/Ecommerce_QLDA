@@ -65,8 +65,10 @@ public class BrandController {
     public String BrandManagement(Model model, @RequestParam Map<String, String> params) {
 
         model.addAttribute("brands", this.brandService.getBrands());
+        int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+        long count = this.brandService.countBrand();
+        model.addAttribute("count", Math.ceil(count * 1.0 / pageSize));
 
-        
         return "manageBrands";
     }
 }

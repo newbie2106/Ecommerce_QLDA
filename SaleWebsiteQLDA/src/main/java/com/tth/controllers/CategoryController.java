@@ -70,7 +70,9 @@ public class CategoryController {
         
         model.addAttribute("categories", this.cateService.getCates());
         
-        
+        int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+        long count = this.cateService.countCate();
+        model.addAttribute("count", Math.ceil(count * 1.0 / pageSize));
         return "manageCategories";
     }
 }
