@@ -71,9 +71,7 @@ public class ProductController {
     public String ProductManagement(Model model, @RequestParam Map<String, String> params) {
 
         model.addAttribute("products", this.prodService.getProducts(params));
-        long pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
-        long count = this.prodService.countProduct();
-        model.addAttribute("count", Math.ceil(count * 1.0 / pageSize));
+       
         return "manageProducts";
     }
 }
