@@ -4,7 +4,6 @@
  */
 package com.tth.configs;
 
-
 import java.util.Properties;
 import javax.sql.DataSource;
 import static org.hibernate.cfg.AvailableSettings.DIALECT;
@@ -22,14 +21,13 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
  *
  * @author tongh
  */
-
-
 @Configuration
 @PropertySource("classpath:databases.properties")
 public class HibernateConfig {
+
     @Autowired
     private Environment env;
-
+    
     @Bean
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean sessionFactory
@@ -41,28 +39,42 @@ public class HibernateConfig {
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
-
+    
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource
                 = new DriverManagerDataSource();
-        dataSource.setDriverClassName(
-                env.getProperty("hibernate.connection.driverClass"));
-        dataSource.setUrl(env.getProperty("hibernate.connection.url"));
-        dataSource.setUsername(
-                env.getProperty("hibernate.connection.username"));
-        dataSource.setPassword(
-                env.getProperty("hibernate.connection.password"));
+//        dataSource.setDriverClassName(
+//                env.getProperty("spring.datasource.driver-class-name"));
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://mysql-springbootsaleapp-container:3306/saleappdb");
+        dataSource.setUsername("hiep");
+        dataSource.setPassword("Admin@123");
+        System.out.println("driverClassName: " + dataSource);
         return dataSource;
     }
-
+    
+//    @Bean
+//    public DataSource dataSource() {
+//        DriverManagerDataSource dataSource
+//                = new DriverManagerDataSource();
+//        dataSource.setDriverClassName(
+//                env.getProperty("hibernate.connection.driverClass"));
+//        dataSource.setUrl(env.getProperty("hibernate.connection.url"));
+//        dataSource.setUsername(
+//                env.getProperty("hibernate.connection.username"));
+//        dataSource.setPassword(
+//                env.getProperty("hibernate.connection.password"));
+//        return dataSource;
+//    }
+    
     private Properties hibernateProperties() {
         Properties props = new Properties();
         props.put(DIALECT, env.getProperty("hibernate.dialect"));
         props.put(SHOW_SQL, env.getProperty("hibernate.showSql"));
         return props;
     }
-
+    
     @Bean
     public HibernateTransactionManager transactionManager() {
         HibernateTransactionManager transactionManager
