@@ -62,11 +62,15 @@ public class ApiUserController {
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
 
+    @GetMapping(path = "/users/{id}/", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> viewUserDetail(@PathVariable(value = "id") int id) {
+        return new ResponseEntity<>(this.userService.getUserById(id), HttpStatus.OK);
+    }
+
     @DeleteMapping("/users/{id}/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable(value = "id") int id) {
         this.userService.deleteUser(id);
     }
 
-    
 }

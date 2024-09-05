@@ -40,5 +40,7 @@ public class ApiCategoryController {
     public ResponseEntity<List<Category>> listCategories() {
         return new ResponseEntity<>(this.cateService.getCates(), HttpStatus.OK);
     }
+    
+    
 
 }

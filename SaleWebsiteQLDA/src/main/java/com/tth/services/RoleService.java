@@ -15,4 +15,6 @@ public interface RoleService {
     
     public List<Role> getRole();
     
+    
+    public Role getRoleById(int id);
 }

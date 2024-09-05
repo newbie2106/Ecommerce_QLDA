@@ -73,6 +73,7 @@ public class UserController {
     public String BrandManagement(Model model) {
 
         model.addAttribute("users", this.userService.getUsers());
+
         int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
         long count = this.userService.countUser();
         model.addAttribute("count", Math.ceil(count * 1.0 / pageSize));
