@@ -24,11 +24,7 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/stats.jsp" />
     </definition>
-    <definition name="manageProducts" extends="baseLayout">
-        <put-attribute name="title" value="Quản lý sản phẩm" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/manage-products.jsp" />
-    </definition>
+   
     <definition name="products" extends="baseLayout">
         <put-attribute name="title" value="Quản lý sản phẩm" />
         <put-attribute name="content"
@@ -114,4 +110,3 @@
     
 
 </tiles-definitions>
-
