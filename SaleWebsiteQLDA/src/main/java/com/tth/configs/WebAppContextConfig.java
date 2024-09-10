@@ -8,6 +8,7 @@ import com.tth.formatters.RoleFormatter;
 import com.tth.formatters.BrandFormatter;
 import com.tth.formatters.CategoryFormatter;
 import java.text.SimpleDateFormat;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -32,7 +33,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
     "com.tth.controllers",
     "com.tth.repositories",
     "com.tth.services",
-    "com.dht.components"
+    "com.tth.components",
+    "com.tth.advice",
+    "com.tth.validator"
 })
 public class WebAppContextConfig implements WebMvcConfigurer {
 
@@ -64,6 +67,11 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         ResourceBundleMessageSource m = new ResourceBundleMessageSource();
         m.setBasename("messages");
         return m;
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
     @Override

@@ -4,10 +4,13 @@
  */
 package com.tth.repositories.impl;
 
+import com.tth.pojo.Role;
 import com.tth.pojo.User;
+import com.tth.repositories.RoleRepository;
 import com.tth.repositories.UserRepository;
 import java.util.Date;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,9 +89,11 @@ public class UserRepositoryImpl implements UserRepository {
                 s.save(user);
                 return true;
             } else {
+
                 if (user.getAvatar() == null) {
                     user.setAvatar(existedUser.getAvatar());
                 }
+                user.setId(existedUser.getId());
                 user.setCreatedDate(existedUser.getCreatedDate());
                 s.merge(user);
                 return true;

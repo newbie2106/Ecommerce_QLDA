@@ -4,10 +4,11 @@
  */
 package com.tth.repositories.impl;
 
-import com.tth.pojo.Brand;
-import com.tth.pojo.Category;
-import com.tth.repositories.BrandRepository;
-import java.util.List;
+import com.tth.pojo.ForgotPassword;
+import com.tth.pojo.User;
+import com.tth.repositories.ForgotPasswordRepository;
+import java.util.Optional;
+import javax.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,50 +22,45 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class BrandRepositoryImpl implements BrandRepository {
+public class ForgotPasswordRepositoryImpl implements ForgotPasswordRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
 
     @Override
-    public Brand getBrandById(int id) {
+    public void AddForgotPassword(ForgotPassword fp) {
         Session s = this.factory.getObject().getCurrentSession();
-        return s.get(Brand.class, id);
+        s.save(fp);
     }
 
     @Override
-    public List<Brand> getBrands() {
+    public ForgotPassword findByOtpAndUSer(int otp, User user) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createNamedQuery("Brand.findAll");
 
-        return q.getResultList();
-    }
+        Query<ForgotPassword> q = s.createQuery("FROM ForgotPassword fp WHERE fp.otp = :otp AND fp.user = :user", ForgotPassword.class);
 
-    @Override
-    public void addOrUpdateBrand(Brand b) {
-        Session s = this.factory.getObject().getCurrentSession();
-        Brand existedBrand = this.getBrandById(b.getId());
-        if (b.getId() != null) {
-            b.setId(existedBrand.getId());
-            b.setLogo(existedBrand.getLogo());
-            s.merge(b);
-        } else {
-            s.save(b);
+        q.setParameter("otp", otp);
+        q.setParameter("user", user);
+
+        try {
+            ForgotPassword result = q.getSingleResult();
+            return result;
+        } catch (NoResultException e) {
+            return null;
         }
     }
 
     @Override
-    public void deleteBrand(int id) {
+    public void deleteOtp(int id) {
         Session s = this.factory.getObject().getCurrentSession();
-        Brand b = this.getBrandById(id);
-        s.delete(b);
+        ForgotPassword fp = this.getForgotPasswordById(id);
+        s.delete(fp);
     }
 
     @Override
-    public long countBrand() {
+    public ForgotPassword getForgotPasswordById(int id) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query<Long> p = s.createQuery("SELECT COUNT(c.id) FROM Brand c", Long.class);
-        return p.uniqueResult();
+        return s.get(ForgotPassword.class, id);
     }
 
 }

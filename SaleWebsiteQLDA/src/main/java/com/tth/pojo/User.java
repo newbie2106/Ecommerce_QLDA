@@ -55,6 +55,7 @@ public class User implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+
     @Size(max = 200)
     @Column(name = "first_name")
     private String firstName;
@@ -94,8 +95,17 @@ public class User implements Serializable {
 
     @Transient
     private MultipartFile file;
-    @Transient
-    private String confirm;
+
+    public User(String username, String password, String firstName, String lastName, String address, String phone, String email) {
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+    }
+
     public User() {
     }
 
@@ -247,19 +257,4 @@ public class User implements Serializable {
     public void setFile(MultipartFile file) {
         this.file = file;
     }
-
-    /**
-     * @return the confirm
-     */
-    public String getConfirm() {
-        return confirm;
-    }
-
-    /**
-     * @param confirm the confirm to set
-     */
-    public void setConfirm(String confirm) {
-        this.confirm = confirm;
-    }
-    
 }

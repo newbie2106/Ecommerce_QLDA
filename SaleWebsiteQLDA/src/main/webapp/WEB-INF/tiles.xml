@@ -14,6 +14,11 @@
         <put-attribute name="footer"
                        value="/WEB-INF/layout/footer.jsp" />
     </definition>
+    <definition name="login" extends="baseLayout">
+        <put-attribute name="title" value="Trang chủ" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/login.jsp" />
+    </definition>
     <definition name="index" extends="baseLayout">
         <put-attribute name="title" value="Trang chủ" />
         <put-attribute name="content"
@@ -64,7 +69,11 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/users.jsp" />
     </definition>
-
+    <definition name="updateInfoUser" extends="baseLayout">
+        <put-attribute name="title" value="Trang chủ" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/update-user.jsp" />
+    </definition>
     <!--    <definition name="post" extends="baseLayout">
         <put-attribute name="title" value="Quản lý bài viết" />
         <put-attribute name="content"

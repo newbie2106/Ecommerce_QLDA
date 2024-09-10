@@ -30,7 +30,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
     "com.tth.controllers",
     "com.tth.repositories",
     "com.tth.services",
-    "com.tth.components",})
+    "com.tth.components",
+    "com.tth.advice",
+    "com.tth.validator"
+})
 
 @Order(2)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -59,10 +62,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         return cloudinary;
     }
 
+    
     @Override
     protected void configure(HttpSecurity http)
             throws Exception {
-        http.formLogin().usernameParameter("username").passwordParameter("password");
+        http.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password");
 
         http.formLogin().defaultSuccessUrl("/")
                 .failureUrl("/login?error");

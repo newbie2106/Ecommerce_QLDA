@@ -26,7 +26,7 @@
 <div class="container">
     <div class="login-container bg-light">
         <h2>Đăng nhập</h2>
-        <form action="/login" method="post">
+        <form action="<c:url value='/login'/>" method="post">
             <div class="mb-3">
                 <label for="username" class="form-label">Tài khoản</label>
                 <input type="text" class="form-control" id="username" name="username" required>

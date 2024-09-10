@@ -1,106 +1,111 @@
-<%-- 
-    Document   : create-password
-    Created on : Sep 3, 2024, 10:21:05 PM
-    Author     : tongh
---%>
-
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<style>
+    .auth-form-light {
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .auth-form-btn {
+        font-size: 16px;
+    }
+    .brand-logo img {
+        max-width: 150px;
+    }
+    .alert-custom {
+        margin-bottom: 20px;
+    }
+    .login-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+    .login-container h2 {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+</style>
+<div class="container">
+    <div class="login-container">
+        <c:if test="${not empty errorMessage}">
+            <div class="alert alert-danger alert-custom" role="alert">
+                <p>${errorMessage}</p>
+            </div>
+        </c:if>
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Lấy lại mật khẩu</title>
-        <script src="<c:url value="/js/script.js" />"></script>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- Hiển thị thông báo thành công nếu có -->
+        <c:if test="${not empty successMessage}">
+            <script>
+                window.onload = function () {
+                    var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                    successModal.show();
 
-        <link rel="stylesheet" href="<c:url value='/assets/vendors/mdi/css/materialdesignicons.min.css' />">
-        <link rel="stylesheet" href="<c:url value='/assets/vendors/ti-icons/css/themify-icons.css' />">
-        <link rel="stylesheet" href="<c:url value='/assets/vendors/css/vendor.bundle.base.css' />">
-        <link rel="stylesheet" href="<c:url value='/assets/vendors/font-awesome/css/font-awesome.min.css' />">
-        <!-- endinject -->
-        <!-- Plugin css for this page -->
-        <!-- End plugin css for this page -->
-        <!-- inject:css -->
-        <!-- endinject -->
-        <!-- Layout styles -->
-        <link rel="stylesheet" href="<c:url value='/assets/css/style.css' />">
-        <!-- End layout styles -->
-        <link rel="shortcut icon" href="<c:url value='/assets/images/favicon.png' />">
+                    var countdownElement = document.getElementById('countdown');
+                    var countdownTime = 10; // Thời gian đếm ngược bắt đầu từ 10 giây
 
-        <!-- container-scroller -->
-        <!-- plugins:js -->
-        <script src="<c:url value='/assets/vendors/js/vendor.bundle.base.js' />"></script>
-        <!-- endinject -->
-        <!-- Plugin js for this page -->
-        <script src="<c:url value='/assets/vendors/chart.js/chart.umd.js' />"></script>
-        <script src="<c:url value='/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js' />"></script>
+                    function updateCountdown() {
+                        if (countdownTime <= 0) {
+                            document.getElementById("logoutForm").submit();
+                        } else {
+                            countdownElement.textContent = countdownTime;
+                            countdownTime--;
+                        }
+                    }
 
-        <!-- End plugin js for this page -->
-        <!-- inject:js -->
-        <script src="<c:url value='/assets/js/off-canvas.js' />"></script>
-        <script src="<c:url value='/assets/js/misc.js' />"></script>
-        <script src="<c:url value='/assets/js/settings.js' />"></script>
-        <script src="<c:url value='/assets/js/todolist.js' />"></script>
-        <script src="<c:url value='/assets/js/jquery.cookie.js' />"></script>
-        <!-- endinject -->
-        <script src="<c:url value='/assets/js/dashboard.js' />"></script>
-    </head>
-    <body class="hold-transition login-page">
-        <div class="container-scroller">
-            <div class="container-fluid page-body-wrapper full-page-wrapper">
-                <div class="content-wrapper d-flex align-items-center auth">
-                    <div class="row flex-grow">
-                        <div class="col-lg-6 mx-auto">
-                            <div class="auth-form-light text-left p-5">
-                                <div class="brand-logo">
-                                    <img src="assets/images/logo.png">
-                                </div>
+                    // Cập nhật đếm ngược mỗi giây
+                    var countdownInterval = setInterval(updateCountdown, 1000);
 
-                                <!-- Hiển thị thông báo lỗi nếu có -->
-                                <c:if test="${not empty errorMessage}">
-                                    <div style="color: red;">
-                                        <p>${errorMessage}</p>
-                                    </div>
-                                </c:if>
+                    // Nếu người dùng nhấn nút Đăng xuất ngay, hủy bỏ đếm ngược
+                    document.getElementById('logoutNowButton').addEventListener('click', function () {
+                        clearInterval(countdownInterval);
+                    });
+                }
+            </script>
 
-                                <!-- Hiển thị thông báo thành công nếu có -->
-                                <c:if test="${not empty successMessage}">
-                                    <div style="color: green;">
-                                        <p>${successMessage}</p>
-                                    </div>
-                                </c:if>
-                                <c:url value="/create-password" var="action" />
-
-                                <form:form method="post" action="${action}">
-
-                                    <div class="form-group">
-                                        <input type="hidden" name="username" value="${username}" class="form-control form-control-lg" id="username" placeholder="Tài khoản" required="true">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" name="newPassword" class="form-control form-control-lg" id="newPassword" placeholder="Nhập mật khẩu mới" required="true">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" name="rePassword" class="form-control form-control-lg" id="rePassword" placeholder="Nhập lại mật khẩu" required="true">
-                                    </div>
-                                    <button type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn">
-                                        Xác nhận</button>
-                                    </form:form>
-                            </div>
+            <!-- Modal thông báo đổi mật khẩu thành công -->
+            <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="successModalLabel">Thông báo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>${successMessage}</p>
+                            <p style="color: blue;">Bạn sẽ tự động chuyển sang trang đăng nhập sau <span id="countdown">10</span> giây hoặc click <strong id="logoutNowButton">Đăng nhập ngay</strong>!</p>
+                        </div>
+                        <div class="modal-footer">
+                            <form id="logoutForm" action="${pageContext.request.contextPath}/login" method="post">
+                                <button type="submit" class="btn btn-primary">Đăng nhật ngay</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </c:if>
+
+        <c:url value="/create-password" var="action" />
+
+        <form:form method="post" action="${action}">
+            <div class="mb-3">
+                <input type="hidden" name="username" value="${username}" class="form-control" id="username" placeholder="Tài khoản" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" name="newPassword" class="form-control" id="newPassword" placeholder="Nhập mật khẩu mới" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" name="rePassword" class="form-control" id="rePassword" placeholder="Nhập lại mật khẩu" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg btn-block auth-form-btn">
+                Xác nhận
+            </button>
+        </form:form>
 
 
-
-    </body>
-</html>
-
-
+    </div>
+</div>
