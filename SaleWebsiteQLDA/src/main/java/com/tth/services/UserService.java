@@ -24,8 +24,13 @@ public interface UserService extends UserDetailsService {
 
     public List<User> getUsers();
 
-    public void addOrUpdateUser(User u);
+    public boolean addOrUpdateUser(User u);
 
     public void deleteUser(int id);
+    
+    public UserAdminDTO getUserAdminDTOByUsername(String username);
+
+    public void changePassword(User user);
+
 
 }

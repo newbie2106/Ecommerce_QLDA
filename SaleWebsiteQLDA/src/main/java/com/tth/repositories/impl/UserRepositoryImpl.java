@@ -26,7 +26,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
-
+    @Autowired
+    private RoleRepository roleRepo;
     @Autowired
     private BCryptPasswordEncoder passEncoder;
 
@@ -68,37 +69,40 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void addOrUpdateUser(User user) {
+    public boolean addOrUpdateUser(User user) {
         Session s = this.factory.getObject().getCurrentSession();
-        User existedUser = getUserByUsername(user.getUsername());
-        if (existedUser.getUsername() != null) {
-            if (user.getPassword() == null) {
-                user.setPassword(existedUser.getPassword());
-            }
-            if (user.getAvatar() == null) {
-                user.setAvatar(existedUser.getAvatar());
-            }
-            if (user.getCreatedDate() == null) {
-                user.setCreatedDate(existedUser.getCreatedDate());
-            }
-            if (user.getAddress() == null) {
-                user.setAddress(existedUser.getAddress());
-            }
-            if (user.getPhone() == null) {
-                user.setPhone(existedUser.getPhone());
-            }
-            if (user.getEmail() == null) {
-                user.setEmail(existedUser.getEmail());
-            }
-            s.update(user);
-        } else {
-            if (user.getAvatar() == null) {
-                user.setAvatar("https://res.cloudinary.com/dsbkju7j9/image/upload/v1719163511/bshktjhrrdzspkm7u301.png");
-            }
-            user.setCreatedDate(new Date());
-            s.save(user);
-        }
+        User existedUser = this.getUserByUsername(user.getUsername());
+        System.out.println("HELLO:" + existedUser);
+        try {
+            Role role = this.roleRepo.getRoleById(1);
+            user.setRoleId(role);
+            if (existedUser == null) {
+                //User updateUser = getUserByUsername(user.getUsername());
 
+                if (user.getAvatar() == null) {
+                    user.setAvatar("https://res.cloudinary.com/dsbkju7j9/image/upload/v1719163511/bshktjhrrdzspkm7u301.png");
+                }
+                user.setCreatedDate(new Date());
+                s.save(user);
+                return true;
+            } else {
+                if (user.getAvatar() == null) {
+                    user.setAvatar(existedUser.getAvatar());
+                }
+                user.setCreatedDate(existedUser.getCreatedDate());
+                s.merge(user);
+                return true;
+            }
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public void changePassword(User user) {
+        Session s = this.factory.getObject().getCurrentSession();
+        s.update(user);
     }
 
     @Override
