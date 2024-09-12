@@ -4,6 +4,7 @@
  */
 package com.tth.repositories.impl;
 
+import com.tth.pojo.Product;
 import com.tth.pojo.Role;
 import com.tth.repositories.RoleRepository;
 import java.util.List;
@@ -31,6 +32,12 @@ public class RoleRepositoryImpl implements RoleRepository {
         Query q = s.createNamedQuery("Role.findAll");
 
         return q.getResultList();
+    }
+
+    @Override
+    public Role getRoleById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(Role.class, id);
     }
 
 }

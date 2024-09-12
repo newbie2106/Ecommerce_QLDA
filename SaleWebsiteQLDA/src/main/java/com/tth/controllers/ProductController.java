@@ -74,6 +74,7 @@ public class ProductController {
         long pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
         long count = this.prodService.countProduct();
         model.addAttribute("count", Math.ceil(count * 1.0 / pageSize));
+
         return "manageProducts";
     }
 }
