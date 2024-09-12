@@ -7,40 +7,43 @@ const Register = () => {
   const [lastName, setLastName] = useState("")
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
-  const [address, setAddress] = useState("")   
+  const [address, setAddress] = useState("")
   const avatar = useRef();
-  
+  const nav = useNavigate();
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-    
+  const [rePassword, setRePassword] = useState("")
+
   const handleRegister = async (e) => {
     e.preventDefault();
-    try {
+
+    if (password === undefined || password !== rePassword)
+      setErr("Mật khẩu KHÔNG khớp!");
+    else {
       let form = new FormData();
-      form.append('firstName', firstName);
-      form.append('lastName', lastName);
-      form.append('email', email);
-      form.append('phone', phone);
-      form.append('address', address);
-      form.append('username', username);
-      form.append('password', password);
-      if (avatar.current && avatar.current.files.length > 0) {
-        form.append('avatar', avatar.current.files[0]);
+
+      if (form !== 'confirm') {
+        form.append('firstName', firstName);
+        form.append('lastName', lastName);
+        form.append('email', email);
+        form.append('phone', phone);
+        form.append('address', address);
+        form.append('username', username);
+        form.append('password', password);
       }
+
+      form.append('file', avatar.current.files[0]);
 
       let res = await APIs.post(endpoints['registerUser'], form, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': "multipart/form-data"
         }
       });
+      console.info(res.data);
 
-      if (res.status === 201) {
-        alert("Đăng ký tài khoản thành công")
-      }
-    } catch (error) {
-      console.error(error);
+      nav("/");
     }
-  };
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -163,13 +166,31 @@ const Register = () => {
             />
           </div>
           <div className="mt-3">
-            <label for="avatar" class="block text-sm font-medium text-gray-700">
+            <label
+              for="password"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Nhập lại mật khẩu
+            </label>
+            <input
+              type="password"
+              id="rePassword"
+              name="rePpassword"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              value={rePassword}
+              onChange={(e) => setRePassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="mt-3">
+            <label for="file" class="block text-sm font-medium text-gray-700">
               Chọn ảnh đại diện
             </label>
             <input
               type="file"
-              id="avatar"
-              name="avatar"
+              id="file"
+              name="file"
               class="mt-1 block w-full px-3 py-2  border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               ref={avatar}
               accept=".png, .jpg, .webp"

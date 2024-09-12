@@ -28,5 +28,7 @@ public interface UserRepository {
     public void changePassword(User user);
 
     public void deleteUser(int id);
+    
+    public boolean addOrUpdateUserClient(User u);
 
 }

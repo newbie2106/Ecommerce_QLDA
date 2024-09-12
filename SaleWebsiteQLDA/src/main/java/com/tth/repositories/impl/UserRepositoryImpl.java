@@ -116,4 +116,24 @@ public class UserRepositoryImpl implements UserRepository {
         User u = this.getUserById(id);
         s.delete(u);
     }
+
+    @Override
+    public boolean addOrUpdateUserClient(User u) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+
+            if (u.getId() != null) {
+                s.update(u);
+                return true;
+
+            } else {
+                s.save(u);
+                return true;
+
+            }
+        } catch (HibernateException ex) {
+            return false;
+
+        }
+    }
 }

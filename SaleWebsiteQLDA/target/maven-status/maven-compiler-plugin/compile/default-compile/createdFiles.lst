@@ -26,6 +26,7 @@ com\tth\pojo\SaleOrder_.class
 com\tth\controllers\ApiProductController.class
 com\tth\pojo\Category_.class
 com\tth\repositories\impl\BrandRepositoryImpl.class
+com\tth\services\impl\UserSeviceImpl$2.class
 com\tth\services\impl\ForgotPasswordServiceImpl.class
 com\tth\controllers\ApiCategoryController.class
 com\tth\repositories\ProductRepository.class
@@ -58,6 +59,7 @@ com\tth\pojo\ForgotPassword.class
 com\tth\pojo\Image.class
 com\tth\controllers\IndexController.class
 com\tth\repositories\BrandRepository.class
+com\tth\services\impl\UserSeviceImpl$1.class
 com\tth\formatters\BrandFormatter.class
 com\tth\pojo\Role_.class
 com\tth\configs\DispatcherServletInit.class
