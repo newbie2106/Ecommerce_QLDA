@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import APIs, { authAPIs, endpoints } from "../../configs/APIs";
+import APIs, { authAPIs, endpoints } from "../configs/APIs";
 import cookie from "react-cookies";
-import { MyDispatchContext, MyUserContext } from "../../App";
+import { MyDispatchContext, MyUserContext } from "../App";
 import { Navigate } from "react-router";
 import { Link } from "react-router-dom";
 
