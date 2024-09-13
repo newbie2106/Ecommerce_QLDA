@@ -26,7 +26,7 @@
             <td>${c.description}</td>
             <td>
                 <c:url value="/api/categories/${c.id}/" var="urlDelete" />
-                <a class="btn btn-info" href="<c:url value="/categories/${c.id}" />">Cập nhật</a>
+                <a class="btn btn-info" href="<c:url value="/categories/${c.id}" />">Cập nhậ</a>
                 <button onclick="eDelete('${urlDelete}',${c.id})" class="btn btn-danger">Xóa</button>
             </td>
         </tr>
