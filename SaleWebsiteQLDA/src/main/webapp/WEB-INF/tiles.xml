@@ -54,7 +54,11 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/manage-brands.jsp" />
     </definition>
-  
+    <definition name="brands" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý nhãn hàng" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/brands.jsp" />
+    </definition>
     <definition name="manageUsers" extends="baseLayout">
         <put-attribute name="title" value="Quản lý tài khoản" />
         <put-attribute name="content"
