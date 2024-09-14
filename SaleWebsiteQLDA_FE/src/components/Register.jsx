@@ -24,7 +24,6 @@ const Register = () => {
       form.append('address', address);
       form.append('username', username);
       form.append('password', password);
-
       if (avatar.current && avatar.current.files.length > 0) {
         form.append('avatar', avatar.current.files[0]);
       }

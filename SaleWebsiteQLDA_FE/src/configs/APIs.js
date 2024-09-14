@@ -4,8 +4,8 @@ import cookie from "react-cookies";
 const BASE_URL = "http://localhost:8080/SaleWebsiteQLDA/api"
 
 export const endpoints = {
-    "registerUser": "/user/register",
-    "login": "/user/login",
+    "registerUser": "/register/",
+    "getAllProducts": "/products/"
 }
 
 export const authAPIs = () => {

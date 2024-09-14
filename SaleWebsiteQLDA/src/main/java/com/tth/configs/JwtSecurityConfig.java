@@ -34,7 +34,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
     "com.tth.controllers",
     "com.tth.repositories",
     "com.tth.services",
-    "com.tth.components",})
+    "com.tth.components",
+    "com.tth.advice",
+    "com.tth.validator"
+})
 @Order(1)
 public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
 

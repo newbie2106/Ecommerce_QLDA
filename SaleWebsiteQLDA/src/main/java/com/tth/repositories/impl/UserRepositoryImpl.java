@@ -4,10 +4,13 @@
  */
 package com.tth.repositories.impl;
 
+import com.tth.pojo.Role;
 import com.tth.pojo.User;
+import com.tth.repositories.RoleRepository;
 import com.tth.repositories.UserRepository;
 import java.util.Date;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +29,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
-
+    @Autowired
+    private RoleRepository roleRepo;
     @Autowired
     private BCryptPasswordEncoder passEncoder;
 
@@ -68,6 +72,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+<<<<<<< HEAD
 
     public void addOrUpdateUser(User u) {
         u.setCreatedDate(new Date());
@@ -79,37 +84,48 @@ public class UserRepositoryImpl implements UserRepository {
         }
 
     public void addOrUpdateUser(User user) {
+=======
+    public boolean addOrUpdateUser(User user) {
+>>>>>>> origin/hiep
         Session s = this.factory.getObject().getCurrentSession();
-        User existedUser = getUserByUsername(user.getUsername());
-        if (existedUser.getUsername() != null) {
-            if (user.getPassword() == null) {
-                user.setPassword(existedUser.getPassword());
-            }
-            if (user.getAvatar() == null) {
-                user.setAvatar(existedUser.getAvatar());
-            }
-            if (user.getCreatedDate() == null) {
+        User existedUser = this.getUserByUsername(user.getUsername());
+        System.out.println("HELLO:" + existedUser);
+        try {
+            Role role = this.roleRepo.getRoleById(1);
+            user.setRoleId(role);
+            if (existedUser == null) {
+                //User updateUser = getUserByUsername(user.getUsername());
+
+<<<<<<< HEAD
+
+=======
+                if (user.getAvatar() == null) {
+                    user.setAvatar("https://res.cloudinary.com/dsbkju7j9/image/upload/v1719163511/bshktjhrrdzspkm7u301.png");
+                }
+                user.setCreatedDate(new Date());
+                s.save(user);
+                return true;
+            } else {
+
+                if (user.getAvatar() == null) {
+                    user.setAvatar(existedUser.getAvatar());
+                }
+                user.setId(existedUser.getId());
                 user.setCreatedDate(existedUser.getCreatedDate());
+                s.merge(user);
+                return true;
             }
-            if (user.getAddress() == null) {
-                user.setAddress(existedUser.getAddress());
-            }
-            if (user.getPhone() == null) {
-                user.setPhone(existedUser.getPhone());
-            }
-            if (user.getEmail() == null) {
-                user.setEmail(existedUser.getEmail());
-            }
-            s.update(user);
-        } else {
-            if (user.getAvatar() == null) {
-                user.setAvatar("https://res.cloudinary.com/dsbkju7j9/image/upload/v1719163511/bshktjhrrdzspkm7u301.png");
-            }
-            user.setCreatedDate(new Date());
-            s.save(user);
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
         }
+    }
 
-
+    @Override
+    public void changePassword(User user) {
+        Session s = this.factory.getObject().getCurrentSession();
+        s.update(user);
+>>>>>>> origin/hiep
     }
 
     @Override

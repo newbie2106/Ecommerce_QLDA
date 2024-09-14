@@ -14,6 +14,7 @@ import java.util.Set;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.tth.DTO.UserAdminDTO;
 import com.tth.pojo.User;
 import com.tth.repositories.UserRepository;
 import com.tth.services.UserService;
@@ -91,10 +92,14 @@ public class UserSeviceImpl implements UserService {
     }
 
     @Override
+<<<<<<< HEAD
     public void addOrUpdateUser(User u) {
 
         u.setAvatar("https://res.cloudinary.com/dsbkju7j9/image/upload/v1719163511/bshktjhrrdzspkm7u301.png");
 
+=======
+    public boolean addOrUpdateUser(User u) {
+>>>>>>> origin/hiep
         if (!u.getFile().isEmpty()) {
             try {
                 Map res = this.cloudinary.uploader().upload(u.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
@@ -104,13 +109,41 @@ public class UserSeviceImpl implements UserService {
             }
         }
         u.setPassword(this.passwordEncoder.encode(u.getPassword()));
+<<<<<<< HEAD
 
         this.userRepo.addOrUpdateUser(u);
+=======
+        return this.userRepo.addOrUpdateUser(u);
+>>>>>>> origin/hiep
     }
 
     @Override
     public void deleteUser(int id) {
         this.userRepo.deleteUser(id);
+    }
+
+     @Override
+    public UserAdminDTO getUserAdminDTOByUsername(String username) {
+        User u = this.getUserByUsername(username);
+        UserAdminDTO userAdminDTO = new UserAdminDTO();
+
+        userAdminDTO.setFirstName(u.getFirstName());
+        userAdminDTO.setLastName(u.getLastName());
+        userAdminDTO.setUsername(u.getUsername());
+        userAdminDTO.setPassword(u.getPassword());
+        userAdminDTO.setAddress(u.getAddress());
+        userAdminDTO.setEmail(u.getEmail());
+        userAdminDTO.setPhone(u.getPhone());
+        userAdminDTO.setAvatar(u.getAvatar());
+        userAdminDTO.setIsActive(true);
+
+        return userAdminDTO;
+    }
+
+    @Override
+    public void changePassword(User user) {
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+        this.userRepo.changePassword(user);
     }
 
 }

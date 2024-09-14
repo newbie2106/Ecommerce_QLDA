@@ -20,15 +20,22 @@ public interface UserRepository {
     public Boolean authUser(String username, String password);
 
     public long countUser();
-    
+
     public List<User> getUsers();
 
+<<<<<<< HEAD
 
     public void addOrUpdateUser(User u);
 
     public void addOrUpdateUser(User user);
 
     
+=======
+    public boolean addOrUpdateUser(User user);
+
+    public void changePassword(User user);
+
+>>>>>>> origin/hiep
     public void deleteUser(int id);
 
 }

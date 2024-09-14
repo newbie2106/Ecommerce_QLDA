@@ -40,33 +40,33 @@ public class HibernateConfig {
         return sessionFactory;
     }
     
-    @Bean
-    public DataSource dataSource() {
-        DriverManagerDataSource dataSource
-                = new DriverManagerDataSource();
-//        dataSource.setDriverClassName(
-//                env.getProperty("spring.datasource.driver-class-name"));
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://mysql-springbootsaleapp-container:3306/saleappdb");
-        dataSource.setUsername("hiep");
-        dataSource.setPassword("Admin@123");
-        System.out.println("driverClassName: " + dataSource);
-        return dataSource;
-    }
-    
 //    @Bean
 //    public DataSource dataSource() {
 //        DriverManagerDataSource dataSource
 //                = new DriverManagerDataSource();
-//        dataSource.setDriverClassName(
-//                env.getProperty("hibernate.connection.driverClass"));
-//        dataSource.setUrl(env.getProperty("hibernate.connection.url"));
-//        dataSource.setUsername(
-//                env.getProperty("hibernate.connection.username"));
-//        dataSource.setPassword(
-//                env.getProperty("hibernate.connection.password"));
+////        dataSource.setDriverClassName(
+////                env.getProperty("spring.datasource.driver-class-name"));
+//        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+//        dataSource.setUrl("jdbc:mysql://mysql-springbootsaleapp-container:3306/saleappdb");
+//        dataSource.setUsername("hiep");
+//        dataSource.setPassword("Admin@123");
+//        System.out.println("driverClassName: " + dataSource);
 //        return dataSource;
 //    }
+    
+    @Bean
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource
+                = new DriverManagerDataSource();
+        dataSource.setDriverClassName(
+                env.getProperty("hibernate.connection.driverClass"));
+        dataSource.setUrl(env.getProperty("hibernate.connection.url"));
+        dataSource.setUsername(
+                env.getProperty("hibernate.connection.username"));
+        dataSource.setPassword(
+                env.getProperty("hibernate.connection.password"));
+        return dataSource;
+    }
     
     private Properties hibernateProperties() {
         Properties props = new Properties();
