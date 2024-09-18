@@ -26,11 +26,7 @@
                                 <a class="nav-link" href="<c:url value='/manage-brands' />">Quản lý nhãn hàng</a>
                             </li>
                             <li class="nav-item">
-
-                                <a class="nav-link" href="<c:url value='/manage-accounts' />">Quản lý tài khoản</a>
-
                                 <a class="nav-link" href="<c:url value='/manage-users' />">Quản lý tài khoản</a>
-
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<c:url value='/stats' />">Thống kê</a>
@@ -41,15 +37,8 @@
                                 <a class="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" href="<c:url value="/"/>">
                                     Chào ${pageContext.request.userPrincipal.name}!</a>
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-<<<<<<< HEAD
-
-
-                                    <li><a class="nav-link" href="<c:url value="/users/${pageContext.request.userPrincipal.name}" />">Thay đổi thông tin</a></li>
-
-=======
                                     <li><a class="nav-link" href="<c:url value="/update-user/${pageContext.request.userPrincipal.name}" />">Thay đổi thông tin</a></li>
                                     <li><a class="nav-link" href="<c:url value="/change-password" />">Thay đổi mật khẩu</a></li>
->>>>>>> origin/hiep
                                     <li><a class="nav-link" href="<c:url value="/logout"/>">Đăng xuất</a></li>
                                 </ul>
                             </li>

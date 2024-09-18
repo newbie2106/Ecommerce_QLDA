@@ -48,7 +48,8 @@ public class ApiForgotPasswordController {
 
     private Integer otpGenerator() {
         Random random = new Random();
-        return random.nextInt(100_000, 999_999);
+//        return random.nextInt(100_000, 999_999);
+            return null;
     }
 
     @PostMapping(value = "/verifyAccount/{username}")

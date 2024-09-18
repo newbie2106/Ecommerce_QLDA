@@ -16,13 +16,14 @@ import com.nimbusds.jwt.SignedJWT;
 import java.text.ParseException;
 import java.util.Date;
 import org.springframework.stereotype.Component;
+
 /**
  *
  * @author tongh
  */
-
 @Component
 public class JwtService {
+
     public static final String SECRET_KEY = "*$&(@*x&$(br!*&#(*!@&#(*!&@($%&sa";
     public static final byte[] SHARED_SECRET_KEY = SECRET_KEY.getBytes();
     public static final int EXPIRE_TIME = 86400000;
@@ -48,6 +49,19 @@ public class JwtService {
         return token;
     }
 
+//    private JWTClaimsSet getClaimsFromToken(String token) {
+//        JWTClaimsSet claims = null;
+//        try {
+//            SignedJWT signedJWT = SignedJWT.parse(token);
+//            JWSVerifier verifier = new MACVerifier(SHARED_SECRET_KEY);
+//            if (signedJWT.verify(verifier)) {
+//                claims = signedJWT.getJWTClaimsSet();
+//            }
+//        } catch (JOSEException | ParseException e) {
+//            System.err.println(e.getMessage());
+//        }
+//        return claims;
+//    }
     private JWTClaimsSet getClaimsFromToken(String token) {
         JWTClaimsSet claims = null;
         try {
@@ -55,10 +69,17 @@ public class JwtService {
             JWSVerifier verifier = new MACVerifier(SHARED_SECRET_KEY);
             if (signedJWT.verify(verifier)) {
                 claims = signedJWT.getJWTClaimsSet();
+            } else {
+                System.err.println("Token verification failed");
             }
         } catch (JOSEException | ParseException e) {
-            System.err.println(e.getMessage());
+            System.err.println("Error parsing token: " + e.getMessage());
         }
+
+        if (claims == null) {
+            System.err.println("Claims from token are null");
+        }
+
         return claims;
     }
 
@@ -68,14 +89,29 @@ public class JwtService {
         return expiration;
     }
 
+//    public String getUsernameFromToken(String token) {
+//        String username = null;
+//        try {
+//            JWTClaimsSet claims = getClaimsFromToken(token);
+//            username = claims.getStringClaim("username");
+//        } catch (ParseException e) {
+//            System.err.println(e.getMessage());
+//        }
+//        return username;
+//    }
     public String getUsernameFromToken(String token) {
         String username = null;
         try {
             JWTClaimsSet claims = getClaimsFromToken(token);
-            username = claims.getStringClaim("username");
+            if (claims != null) {
+                username = claims.getStringClaim("username");
+            } else {
+                System.err.println("Claims are null");
+            }
         } catch (ParseException e) {
-            System.err.println(e.getMessage());
+            System.err.println("Error parsing username from token: " + e.getMessage());
         }
+
         return username;
     }
 
@@ -84,12 +120,26 @@ public class JwtService {
         return expiration.before(new Date());
     }
 
+//    public Boolean validateTokenLogin(String token) {
+//        if (token == null || token.trim().length() == 0) {
+//            return false;
+//        }
+//        String username = getUsernameFromToken(token);
+//
+//        return !(username == null || username.isEmpty() || isTokenExpired(token));
+//    }
     public Boolean validateTokenLogin(String token) {
         if (token == null || token.trim().length() == 0) {
+            System.err.println("Token is null or empty");
             return false;
         }
         String username = getUsernameFromToken(token);
+        if (username == null || username.isEmpty()) {
+            System.err.println("Username from token is null or empty");
+            return false;
+        }
 
-        return !(username == null || username.isEmpty() || isTokenExpired(token));
+        return !isTokenExpired(token);
     }
+
 }

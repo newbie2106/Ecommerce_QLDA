@@ -72,21 +72,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-<<<<<<< HEAD
-
-    public void addOrUpdateUser(User u) {
-        u.setCreatedDate(new Date());
-        Session s = this.factory.getObject().getCurrentSession();
-        if (u.getId() != null) {
-            s.update(u);
-        } else {
-            s.save(u);
-        }
-
-    public void addOrUpdateUser(User user) {
-=======
     public boolean addOrUpdateUser(User user) {
->>>>>>> origin/hiep
         Session s = this.factory.getObject().getCurrentSession();
         User existedUser = this.getUserByUsername(user.getUsername());
         System.out.println("HELLO:" + existedUser);
@@ -96,9 +82,6 @@ public class UserRepositoryImpl implements UserRepository {
             if (existedUser == null) {
                 //User updateUser = getUserByUsername(user.getUsername());
 
-<<<<<<< HEAD
-
-=======
                 if (user.getAvatar() == null) {
                     user.setAvatar("https://res.cloudinary.com/dsbkju7j9/image/upload/v1719163511/bshktjhrrdzspkm7u301.png");
                 }
@@ -125,7 +108,6 @@ public class UserRepositoryImpl implements UserRepository {
     public void changePassword(User user) {
         Session s = this.factory.getObject().getCurrentSession();
         s.update(user);
->>>>>>> origin/hiep
     }
 
     @Override
@@ -133,5 +115,25 @@ public class UserRepositoryImpl implements UserRepository {
         Session s = this.factory.getObject().getCurrentSession();
         User u = this.getUserById(id);
         s.delete(u);
+    }
+
+    @Override
+    public boolean addOrUpdateUserClient(User u) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+
+            if (u.getId() != null) {
+                s.update(u);
+                return true;
+
+            } else {
+                s.save(u);
+                return true;
+
+            }
+        } catch (HibernateException ex) {
+            return false;
+
+        }
     }
 }

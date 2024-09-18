@@ -7,7 +7,9 @@ package com.tth.services;
 import com.tth.DTO.UserAdminDTO;
 import com.tth.pojo.User;
 import java.util.List;
+import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -32,6 +34,8 @@ public interface UserService extends UserDetailsService {
     public UserAdminDTO getUserAdminDTOByUsername(String username);
 
     public void changePassword(User user);
+    
+    public boolean addOrUpdateUserClient(Map<String, String> params,MultipartFile file);
 
 
 }

@@ -23,19 +23,12 @@ public interface UserRepository {
 
     public List<User> getUsers();
 
-<<<<<<< HEAD
-
-    public void addOrUpdateUser(User u);
-
-    public void addOrUpdateUser(User user);
-
-    
-=======
     public boolean addOrUpdateUser(User user);
 
     public void changePassword(User user);
 
->>>>>>> origin/hiep
     public void deleteUser(int id);
+    
+    public boolean addOrUpdateUserClient(User u);
 
 }

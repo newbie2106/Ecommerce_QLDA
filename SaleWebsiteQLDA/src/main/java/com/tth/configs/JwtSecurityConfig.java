@@ -89,13 +89,16 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/api/brands/**").permitAll();
         http.authorizeRequests().antMatchers("/api/users/").permitAll();
         http.authorizeRequests().antMatchers("/api/users/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/register/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/current-user/").permitAll();
+
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/**/comments/").permitAll();
         http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
                 //                .antMatchers(HttpMethod.DELETE, "/api/products/**").permitAll()
                 //                .antMatchers(HttpMethod.DELETE, "/api/categories/**").permitAll()
                 //                .antMatchers(HttpMethod.DELETE, "/api/brands/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers(HttpMethod.GET, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
                 .antMatchers(HttpMethod.POST, "/api/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.DELETE, "/api/**").access("hasRole('ROLE_ADMIN')").and()
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)

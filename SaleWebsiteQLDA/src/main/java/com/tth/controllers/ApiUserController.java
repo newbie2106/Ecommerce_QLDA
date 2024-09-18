@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -37,6 +38,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -49,7 +51,8 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping("/api")
-@CrossOrigin
+//@CrossOrigin
+@CrossOrigin(origins = "http://127.0.0.1:5173", allowedHeaders = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE })
 public class ApiUserController {
 
     @Autowired
@@ -74,9 +77,10 @@ public class ApiUserController {
         return new ResponseEntity<>("error" + user.getUsername(), HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping(path = "/current-user/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/user/current-user/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> getCurrentUser(Principal p) {
         User u = this.userService.getUserByUsername(p.getName());
+        System.out.println("name" + p.getName());
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
 
@@ -95,28 +99,23 @@ public class ApiUserController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
-    public ResponseEntity registerAccount(@ModelAttribute UserAdminDTO userAdminDTO,
-            BindingResult bindingResult, @RequestPart MultipartFile avatar) {
-        updateUserAdminValidator.validate(userAdminDTO, bindingResult);
-        if (bindingResult.hasErrors()) {
-            Map<String, List<String>> errorsRes = new HashMap<>();
-            for (FieldError error : bindingResult.getFieldErrors()) {
-                String fieldName = error.getField();
-                String errorMessage = messageSource.getMessage(error, Locale.getDefault());
-                errorsRes.computeIfAbsent(fieldName, k -> new ArrayList<>()).add(errorMessage);
-            }
-            return new ResponseEntity(errorsRes, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity registerAccount(@RequestParam Map<String, String> params,
+            @RequestParam("file") MultipartFile file) {
         try {
-            ModelMapper modelMapper = new ModelMapper();
-            modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-            User u = modelMapper.map(userAdminDTO, User.class);
-            if (this.userService.addOrUpdateUser(u)) {
+            if (userService.addOrUpdateUserClient(params, file)) {
                 return new ResponseEntity("Success", HttpStatus.CREATED);
             }
-
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error", HttpStatus.BAD_REQUEST);
+        } catch (ValidationException ve) {
+            Map<String, List<String>> errors = ve.getErrors();
+            Map<String, List<String>> errorsRes = new HashMap<>();
+            errors.forEach((key, value) -> {
+                List<String> listErr = new ArrayList<>();
+                for (String errCode : value) {
+                    listErr.add(messageSource.getMessage(errCode, null, Locale.getDefault()));
+                }
+                errorsRes.put(key, listErr);
+            });
+            return new ResponseEntity(errorsRes, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>("Error", HttpStatus.BAD_REQUEST);
     }
