@@ -4,6 +4,7 @@
  */
 package com.tth.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -86,10 +87,13 @@ public class User implements Serializable {
     @Column(name = "avatar")
     private String avatar;
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "userId")
+    @JsonIgnore
     private Set<SaleOrder> saleOrderSet;
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "userId")
+    @JsonIgnore
     private Set<Comment> commentSet;
     @JoinColumn(name = "role_id", referencedColumnName = "id")
+    @JsonIgnore
     @ManyToOne
     private Role roleId;
 
