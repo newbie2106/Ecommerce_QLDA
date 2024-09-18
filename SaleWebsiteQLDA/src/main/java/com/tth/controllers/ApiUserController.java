@@ -4,41 +4,25 @@
  */
 package com.tth.controllers;
 
-import com.tth.DTO.UserAdminDTO;
-import com.tth.advice.ValidationException;
 import com.tth.components.JwtService;
 import com.tth.pojo.Role;
 import com.tth.pojo.User;
 import com.tth.services.RoleService;
 import com.tth.services.UserService;
-import com.tth.validator.UpdateUserAdminValidator;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -51,8 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping("/api")
-//@CrossOrigin
-@CrossOrigin(origins = "http://127.0.0.1:5173", allowedHeaders = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE })
+@CrossOrigin
 public class ApiUserController {
 
     @Autowired
@@ -63,10 +46,6 @@ public class ApiUserController {
     private RoleService roleService;
     @Autowired
     private BCryptPasswordEncoder passswordEncoder;
-    @Autowired
-    private UpdateUserAdminValidator updateUserAdminValidator;
-    @Autowired
-    private MessageSource messageSource;
 
     @PostMapping("/login/")
     public ResponseEntity<String> login(@RequestBody User user) {
@@ -77,10 +56,9 @@ public class ApiUserController {
         return new ResponseEntity<>("error" + user.getUsername(), HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping(path = "/user/current-user/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/current-user/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> getCurrentUser(Principal p) {
         User u = this.userService.getUserByUsername(p.getName());
-        System.out.println("name" + p.getName());
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
 
@@ -93,31 +71,6 @@ public class ApiUserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable(value = "id") int id) {
         this.userService.deleteUser(id);
-    }
-
-    @PostMapping(path = "/register/",
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
-    )
-    public ResponseEntity registerAccount(@RequestParam Map<String, String> params,
-            @RequestParam("file") MultipartFile file) {
-        try {
-            if (userService.addOrUpdateUserClient(params, file)) {
-                return new ResponseEntity("Success", HttpStatus.CREATED);
-            }
-        } catch (ValidationException ve) {
-            Map<String, List<String>> errors = ve.getErrors();
-            Map<String, List<String>> errorsRes = new HashMap<>();
-            errors.forEach((key, value) -> {
-                List<String> listErr = new ArrayList<>();
-                for (String errCode : value) {
-                    listErr.add(messageSource.getMessage(errCode, null, Locale.getDefault()));
-                }
-                errorsRes.put(key, listErr);
-            });
-            return new ResponseEntity(errorsRes, HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>("Error", HttpStatus.BAD_REQUEST);
     }
 
 }

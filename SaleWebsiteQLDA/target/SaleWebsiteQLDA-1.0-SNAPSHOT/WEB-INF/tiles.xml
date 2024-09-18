@@ -29,11 +29,6 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/manage-products.jsp" />
     </definition>
-     <definition name="login" extends="baseLayout">
-        <put-attribute name="title" value="Đăng nhập" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/login.jsp" />
-    </definition>
     <definition name="products" extends="baseLayout">
         <put-attribute name="title" value="Quản lý sản phẩm" />
         <put-attribute name="content"
@@ -69,25 +64,6 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/users.jsp" />
     </definition>
-    <definition name="verifyAccount" extends="baseLayout">
-        <put-attribute name="title" value="Quản lý tài khoản" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/verify-account.jsp" />
-    </definition>
-    <definition name="verifyOtp" extends="baseLayout">
-        <put-attribute name="title" value="Quản lý tài khoản" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/verify-otp.jsp" />
-    </definition>
-    <definition name="createPassword" extends="baseLayout">
-        <put-attribute name="title" value="Quản lý tài khoản" />
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/create-password.jsp" />
-    </definition>
-    <definition name="changePassword" extends="baseLayout">
-        <put-attribute name="title" value="Đổi mật khẩu"/>
-        <put-attribute name="content"
-                       value="/WEB-INF/pages/change-password.jsp" />
-    </definition>
-
+    
 </tiles-definitions>
+

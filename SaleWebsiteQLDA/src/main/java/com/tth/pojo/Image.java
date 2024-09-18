@@ -58,7 +58,6 @@ public class Image implements Serializable {
     @Size(max = 255)
     @Column(name = "url")
     private String url;
-    @JsonIgnore
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Product productId;

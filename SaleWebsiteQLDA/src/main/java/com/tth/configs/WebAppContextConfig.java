@@ -4,11 +4,15 @@
  */
 package com.tth.configs;
 
+
+import formatters.BrandFormatter;
+import formatters.CategoryFormatter;
+
 import com.tth.formatters.RoleFormatter;
 import com.tth.formatters.BrandFormatter;
 import com.tth.formatters.CategoryFormatter;
+
 import java.text.SimpleDateFormat;
-import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -33,9 +37,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
     "com.tth.controllers",
     "com.tth.repositories",
     "com.tth.services",
-    "com.tth.components",
-    "com.tth.advice",
-    "com.tth.validator"
+    "com.dht.components"
 })
 public class WebAppContextConfig implements WebMvcConfigurer {
 
@@ -69,15 +71,14 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         return m;
     }
 
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
-
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new CategoryFormatter());
         registry.addFormatter(new BrandFormatter());
+
+
+
         registry.addFormatter(new RoleFormatter());
+
     }
 }

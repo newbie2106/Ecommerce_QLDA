@@ -4,14 +4,17 @@ import cookie from "react-cookies";
 const BASE_URL = "http://localhost:8080/SaleWebsiteQLDA/api";
 
 export const endpoints = {
+
   registerUser: "/register/",
   loginUser: "/login/",
   "current-user": "/current-user/",
+    "registerUser": "/register/",
+    "getAllProducts": "/products/",
+    "loginUser": "/login/",
+  "getAllCategories": "/categories/",
 
-  getAllCategories: "/categories/",
-
-  getAllProducts: "/products/",
-  getProductDetail: (productId) => `/products/${productId}/`,
+  "getAllProducts": "/products/",
+  "getProductDetail": (productId) => `/products/${productId}/`,
 };
 
 // export const authAPIs = () => {
@@ -44,6 +47,12 @@ export const getCurrentUser = async () => {
     console.error(ex);
   }
 };
+    return axios.create({
+        baseURL: BASE_URL,
+        headers: {
+            'Authorization': cookie.load('token')
+        }
+    })
 
 export default axios.create({
   baseURL: BASE_URL,

@@ -43,11 +43,8 @@ public class BrandRepositoryImpl implements BrandRepository {
     @Override
     public void addOrUpdateBrand(Brand b) {
         Session s = this.factory.getObject().getCurrentSession();
-        Brand existedBrand = this.getBrandById(b.getId());
         if (b.getId() != null) {
-            b.setId(existedBrand.getId());
-            b.setLogo(existedBrand.getLogo());
-            s.merge(b);
+            s.update(b);
         } else {
             s.save(b);
         }

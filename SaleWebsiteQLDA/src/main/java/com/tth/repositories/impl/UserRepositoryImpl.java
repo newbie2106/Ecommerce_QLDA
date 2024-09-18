@@ -4,13 +4,10 @@
  */
 package com.tth.repositories.impl;
 
-import com.tth.pojo.Role;
 import com.tth.pojo.User;
-import com.tth.repositories.RoleRepository;
 import com.tth.repositories.UserRepository;
 import java.util.Date;
 import java.util.List;
-import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +26,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
-    @Autowired
-    private RoleRepository roleRepo;
+
     @Autowired
     private BCryptPasswordEncoder passEncoder;
 
@@ -72,42 +68,48 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public boolean addOrUpdateUser(User user) {
+
+    public void addOrUpdateUser(User u) {
+        u.setCreatedDate(new Date());
         Session s = this.factory.getObject().getCurrentSession();
-        User existedUser = this.getUserByUsername(user.getUsername());
-        System.out.println("HELLO:" + existedUser);
-        try {
-            Role role = this.roleRepo.getRoleById(1);
-            user.setRoleId(role);
-            if (existedUser == null) {
-                //User updateUser = getUserByUsername(user.getUsername());
-
-                if (user.getAvatar() == null) {
-                    user.setAvatar("https://res.cloudinary.com/dsbkju7j9/image/upload/v1719163511/bshktjhrrdzspkm7u301.png");
-                }
-                user.setCreatedDate(new Date());
-                s.save(user);
-                return true;
-            } else {
-
-                if (user.getAvatar() == null) {
-                    user.setAvatar(existedUser.getAvatar());
-                }
-                user.setId(existedUser.getId());
-                user.setCreatedDate(existedUser.getCreatedDate());
-                s.merge(user);
-                return true;
-            }
-        } catch (HibernateException ex) {
-            ex.printStackTrace();
-            return false;
+        if (u.getId() != null) {
+            s.update(u);
+        } else {
+            s.save(u);
         }
-    }
 
-    @Override
-    public void changePassword(User user) {
+    public void addOrUpdateUser(User user) {
         Session s = this.factory.getObject().getCurrentSession();
-        s.update(user);
+        User existedUser = getUserByUsername(user.getUsername());
+        if (existedUser.getUsername() != null) {
+            if (user.getPassword() == null) {
+                user.setPassword(existedUser.getPassword());
+            }
+            if (user.getAvatar() == null) {
+                user.setAvatar(existedUser.getAvatar());
+            }
+            if (user.getCreatedDate() == null) {
+                user.setCreatedDate(existedUser.getCreatedDate());
+            }
+            if (user.getAddress() == null) {
+                user.setAddress(existedUser.getAddress());
+            }
+            if (user.getPhone() == null) {
+                user.setPhone(existedUser.getPhone());
+            }
+            if (user.getEmail() == null) {
+                user.setEmail(existedUser.getEmail());
+            }
+            s.update(user);
+        } else {
+            if (user.getAvatar() == null) {
+                user.setAvatar("https://res.cloudinary.com/dsbkju7j9/image/upload/v1719163511/bshktjhrrdzspkm7u301.png");
+            }
+            user.setCreatedDate(new Date());
+            s.save(user);
+        }
+
+
     }
 
     @Override
@@ -115,25 +117,5 @@ public class UserRepositoryImpl implements UserRepository {
         Session s = this.factory.getObject().getCurrentSession();
         User u = this.getUserById(id);
         s.delete(u);
-    }
-
-    @Override
-    public boolean addOrUpdateUserClient(User u) {
-        Session s = this.factory.getObject().getCurrentSession();
-        try {
-
-            if (u.getId() != null) {
-                s.update(u);
-                return true;
-
-            } else {
-                s.save(u);
-                return true;
-
-            }
-        } catch (HibernateException ex) {
-            return false;
-
-        }
     }
 }
