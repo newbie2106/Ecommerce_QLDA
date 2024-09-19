@@ -50,7 +50,9 @@ public class ForgotPasswordController {
 
     private Integer otpGenerator() {
         Random random = new Random();
-        return random.nextInt(100_000, 999_999);
+//        return random.nextInt(100_000, 999_999);
+        return null;
+
     }
 
     @GetMapping("/verify-account")
@@ -138,7 +140,7 @@ public class ForgotPasswordController {
             RedirectAttributes redirectAttributes) {
 
         User user = userService.getUserByUsername(username);
-    
+
 // LÀM PASSWWORD KHÓ (CHUA LAM)
         if (!newPassword.equals(rePassword)) {
             redirectAttributes.addFlashAttribute("errorMessage", "Mật khẩu mới và xác nhận mật khẩu không khớp!");

@@ -9,7 +9,6 @@ import ProductDetails from './components/ProductDetails';
 import Login from './components/Login';
 import Footer from './components/Footer';
 
-import Login from './components/Login';
 
 
 export const MyUserContext = createContext();
@@ -24,9 +23,9 @@ const App = () => {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/Register" element={<Register />} />
-            <Route path="/Login" element={<Login />} />
-            <Route path="/Product/:productId" element={<ProductDetails />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/products/:productId" element={<ProductDetails />} />
           </Routes>
           <Footer/>
         </MyDispatchContext.Provider>

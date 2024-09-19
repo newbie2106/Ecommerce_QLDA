@@ -80,6 +80,7 @@ public class Product implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "productId")
+    @JsonIgnore
     private Set<Image> imageSet;
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
