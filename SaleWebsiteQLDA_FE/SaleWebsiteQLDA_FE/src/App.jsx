@@ -8,6 +8,7 @@ import Header from './components/Header';
 import ProductDetails from './components/ProductDetails';
 import Login from './components/Login';
 import Footer from './components/Footer';
+import CategoryManager from './components/CategoryManager';
 
 
 
@@ -26,6 +27,7 @@ const App = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/products/:productId" element={<ProductDetails />} />
+            <Route path="/category" element={<CategoryManager />} />
           </Routes>
           <Footer/>
         </MyDispatchContext.Provider>

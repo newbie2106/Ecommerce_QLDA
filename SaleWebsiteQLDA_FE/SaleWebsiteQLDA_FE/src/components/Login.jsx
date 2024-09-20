@@ -2,8 +2,7 @@ import React, { useContext, useState } from "react";
 import APIs, { authAPIs, endpoints, getCurrentUser } from "../configs/APIs";
 import cookie from "react-cookies";
 import { MyDispatchContext, MyUserContext } from "../App";
-import { Navigate } from "react-router";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const user = useContext(MyUserContext);
@@ -12,6 +11,8 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [statusLogin, setStatusLogin] = useState();
+
+  const nav = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();

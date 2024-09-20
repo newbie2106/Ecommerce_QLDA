@@ -8,7 +8,10 @@ export const endpoints = {
   "registerUser": "/register/",
   "getAllProducts": "/products/",
   "loginUser": "/login/",
+
   "getAllCategories": "/categories/",
+  "deleteCategory": (categoryId) => `/categories/${categoryId}/`,
+
   "getProductDetail": (productId) => `/products/${productId}/`,
 };
 

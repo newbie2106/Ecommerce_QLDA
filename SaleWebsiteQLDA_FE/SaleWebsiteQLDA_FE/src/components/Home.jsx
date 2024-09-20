@@ -31,11 +31,11 @@ const Home = () => {
   };
   
   return (
-    <div className="mt-24 mb-8 w-4/5 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div className="mt-24 mb-8 w-4/5 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 min-h-screen">
       {loading ? (
-        <div className="flex items-center justify-center fixed inset-0">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent border-solid rounded-full animate-spin"></div>
-        </div>
+         <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+         <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-white"></div>
+       </div>
       ) : (
         <>
           {products.map((product) => (
