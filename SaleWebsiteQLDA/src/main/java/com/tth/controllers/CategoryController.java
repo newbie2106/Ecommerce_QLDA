@@ -36,35 +36,7 @@ public class CategoryController {
     @Autowired
     private Environment env;
     
-    @GetMapping("/categories")
-    public String createView(Model model) {
-        model.addAttribute("category", new Category());
-        return "categories";
-    }
-
-    @PostMapping("/categories")
-    public String createCategory(@ModelAttribute(value = "category") @Valid Category p,
-            BindingResult rs) {
-        if (!rs.hasErrors()) {
-            try {
-                //p.setCreatedDate(new Date());
-                this.cateService.addOrUpdateCate(p);
-                return "redirect:/manage-categories";
-            } catch (Exception ex) {
-                System.err.println(ex.getMessage());
-            }
-        }
-
-        return "categories";
-    }
-
-    @GetMapping("/categories/{categoryId}")
-    public String updateView(Model model, @PathVariable(value = "categoryId") int id) {
-        model.addAttribute("category", this.cateService.getCategoryById(id));
-
-        return "categories";
-    }
-    
+   
     @RequestMapping("/manage-categories")
     public String CategoryManagement(Model model,@RequestParam Map<String, String> params) {
         

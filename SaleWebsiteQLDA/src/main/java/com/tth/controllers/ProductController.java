@@ -38,35 +38,7 @@ public class ProductController {
     @Autowired
     private Environment env;
     
-    @GetMapping("/products")
-    public String createView(Model model) {
-        model.addAttribute("product", new Product());
-        return "products";
-    }
-
-    @PostMapping("/products")
-    public String createProduct(@ModelAttribute(value = "product") @Valid Product p,
-            BindingResult rs, @RequestParam List<MultipartFile> image) {
-        if (!rs.hasErrors()) {
-            try {
-                //p.setCreatedDate(new Date());
-                this.prodService.addOrUpdate(p, image);
-                return "redirect:/manage-products";
-            } catch (Exception ex) {
-                System.err.println(ex.getMessage());
-            }
-        }
-
-        return "products";
-    }
-
-    @GetMapping("/products/{productId}")
-    public String updateView(Model model, @PathVariable(value = "productId") int id) {
-        model.addAttribute("product", this.prodService.getProductById(id));
-
-        return "products";
-    }
-
+    
     @RequestMapping("/manage-products")
     public String ProductManagement(Model model, @RequestParam Map<String, String> params) {
 
