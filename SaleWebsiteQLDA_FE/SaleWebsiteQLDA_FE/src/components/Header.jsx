@@ -43,7 +43,8 @@ const Header = () => {
                         <Link className='text-white' to="/login">Đăng nhập</Link>
                         <Link className='text-white' to="/register">Đăng ký</Link></>
                     : <>
-                        {user !== null && user.username == "hiep" &&  <Link className='text-white' to="/category">Quản Lý Danh Mục</Link> }
+                        {user !== null && user.username == "hiep" &&  <Link className='text-white' to="/category">Quản Lý Danh Mục</Link>}
+                        {user !== null && user.username == "hiep" &&  <Link className='text-white' to="/products">Quản Lý Sản Phẩm</Link>}
                         <Link className='text-white' to="/userDetails">Hi {user.username} !</Link>
                         <button className='text-white' onClick={handleLogout}>Đăng xuất</button>
                     </>}

@@ -9,6 +9,8 @@ import ProductDetails from './components/ProductDetails';
 import Login from './components/Login';
 import Footer from './components/Footer';
 import CategoryManager from './components/CategoryManager';
+import ProductManager from './components/ProductManager';
+
 
 
 
@@ -28,6 +30,7 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/products/:productId" element={<ProductDetails />} />
             <Route path="/category" element={<CategoryManager />} />
+            <Route path="/products" element={<ProductManager/>} />
           </Routes>
           <Footer/>
         </MyDispatchContext.Provider>

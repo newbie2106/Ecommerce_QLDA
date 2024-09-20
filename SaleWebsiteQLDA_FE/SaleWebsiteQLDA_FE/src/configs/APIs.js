@@ -11,6 +11,7 @@ export const endpoints = {
 
   "getAllCategories": "/categories/",
   "deleteCategory": (categoryId) => `/categories/${categoryId}/`,
+  "addCategory": "/categories/",
 
   "getProductDetail": (productId) => `/products/${productId}/`,
 };
